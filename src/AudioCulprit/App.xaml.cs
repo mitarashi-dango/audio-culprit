@@ -20,14 +20,16 @@ public partial class App : Application
     private HotkeyService? hotkey;
     private QuickWindow? quick;
     private string settingsPath = "";
-    internal bool HotkeyEnabled { get; private set; } = true;
-    internal string HotkeyStatus => !HotkeyEnabled ? "無効" : hotkey?.Registered == true ? hotkey.Label + " で「今の音？」を表示" : "登録できません。他のアプリで使われている可能性があります。";
+    private AppSettings settings = new();
+    internal bool HotkeyEnabled => settings.HotkeyEnabled;
+    internal string HotkeyStatus => !HotkeyEnabled ? UiText.Get("Disabled") : hotkey?.Registered == true ? UiText.Format("HotkeyStatus", hotkey.Label) : UiText.Get("HotkeyUnavailable");
     internal bool SetHotkey(bool enabled)
     {
         if (hotkey == null) return false;
         var success = hotkey.Enable(enabled);
-        HotkeyEnabled = enabled;
-        File.WriteAllText(settingsPath, System.Text.Json.JsonSerializer.Serialize(new { HotkeyEnabled }));
+        var changed = settings with { HotkeyEnabled = enabled };
+        changed.Save(settingsPath);
+        settings = changed;
         return success;
     }
     internal void ShowQuick()
@@ -51,6 +53,7 @@ public partial class App : Application
     private readonly System.Windows.Threading.DispatcherTimer housekeeping = new() { Interval = TimeSpan.FromSeconds(30) };
     protected override void OnStartup(StartupEventArgs e)
     {
+        UiText.Initialize();
         base.OnStartup(e);
         mutex = new Mutex(true, "Local\\AudioCulprit.v02", out var first);
         if (!first)
@@ -66,13 +69,9 @@ public partial class App : Application
             foreach (var item in Repository.Load()) historySnapshot.Add(item);
             historySnapshot.SetRules(Repository.Rules());
             settingsPath = Path.Combine(verifyFolder ?? DataFolder, "settings.json");
-            if (File.Exists(settingsPath))
-            {
-                try { using var saved = System.Text.Json.JsonDocument.Parse(File.ReadAllText(settingsPath)); HotkeyEnabled = saved.RootElement.GetProperty("HotkeyEnabled").GetBoolean(); }
-                catch (Exception ex) when (ex is System.Text.Json.JsonException or InvalidOperationException or System.Collections.Generic.KeyNotFoundException) { HotkeyEnabled = true; }
-            }
+            settings = AppSettings.Load(settingsPath);
             writer = new HistoryWriter(Repository);
-            writer.Failed += ex => Dispatcher.BeginInvoke(() => (MainWindow as MainWindow)?.ShowError("履歴を保存できません: " + ex.Message));
+            writer.Failed += ex => Dispatcher.BeginInvoke(() => (MainWindow as MainWindow)?.ShowError(UiText.Get("HistorySaveFailed") + ex.Message));
             Monitor = new AudioMonitorService();
             Monitor.Completed += Save;
             housekeeping.Tick += (_, _) => { try { foreach (var item in Monitor.Active) writer.Save(item with { EndTimeUtc = null }); writer.Prune(); historySnapshot.Prune(); } catch (Exception ex) { (MainWindow as MainWindow)?.ShowError(ex.Message); } };
@@ -81,22 +80,30 @@ public partial class App : Application
             hotkey.Enable(HotkeyEnabled);
 
             var menu = new Forms.ContextMenuStrip();
-            menu.Items.Add("開く", null, (_, _) => ShowMain());
-            var quickMenu = menu.Items.Add("今の音？", null, (_, _) => ShowQuick());
-            menu.Opening += (_, _) => quickMenu.Text = "今の音？" + (hotkey.Registered ? "（" + hotkey.Label + "）" : "");
-            monitorToggle = new Forms.ToolStripMenuItem("監視を停止", null, (_, _) => SetMonitoring(!Monitor.Enabled));
+            menu.Items.Add(UiText.Get("Open"), null, (_, _) => ShowMain());
+            var quickMenu = menu.Items.Add(UiText.Get("RecentSound"), null, (_, _) => ShowQuick());
+            menu.Opening += (_, _) => quickMenu.Text = UiText.Get("RecentSound") + (hotkey.Registered ? " (" + hotkey.Label + ")" : "");
+            monitorToggle = new Forms.ToolStripMenuItem(UiText.Get("StopMonitoring"), null, (_, _) => SetMonitoring(!Monitor.Enabled));
             menu.Items.Add(monitorToggle);
             menu.Opening += (_, _) => UpdateTrayState();
-            menu.Items.Add("設定", null, (_, _) => { ShowMain(); ((MainWindow)MainWindow).OpenSettings(); });
-            menu.Items.Add("終了", null, (_, _) => Shutdown());
+            menu.Items.Add(UiText.Get("Settings"), null, (_, _) => { ShowMain(); ((MainWindow)MainWindow).OpenSettings(); });
+            updateMenu = new Forms.ToolStripMenuItem(UiText.Get("CheckUpdates"), null, async (_, _) =>
+            {
+                if (AvailableUpdate != null) OpenReleasePage();
+                else MessageBox.Show(await CheckForUpdatesAsync(), UiText.Get("Updates"));
+            });
+            menu.Items.Add(updateMenu);
+            menu.Items.Add(UiText.Get("Exit"), null, (_, _) => Shutdown());
             using (var iconStream = GetResourceStream(new Uri("pack://application:,,,/Assets/audio-culprit.ico")).Stream)
             using (var icon = new System.Drawing.Icon(iconStream))
                 appIcon = (System.Drawing.Icon)icon.Clone();
-            tray = new Forms.NotifyIcon { Text = "AudioCulprit · 音の犯人", Icon = appIcon, Visible = true, ContextMenuStrip = menu };
+            tray = new Forms.NotifyIcon { Text = UiText.Get("TrayTitle"), Icon = appIcon, Visible = true, ContextMenuStrip = menu };
             tray.MouseClick += (_, args) => { if (args.Button == Forms.MouseButtons.Left) ShowMain(); };
+            tray.BalloonTipClicked += (_, _) => OpenReleasePage();
             UpdateTrayState();
             if (!e.Args.Contains("--tray"))
                 ShowMain();
+            if (verifyFolder == null) StartUpdateChecks();
             if (verifyFolder != null)
             {
                 if (e.Args.Contains("--soak"))
@@ -107,7 +114,7 @@ public partial class App : Application
                     Verification.Start(this, (MainWindow)MainWindow, verifyFolder);
             }
         }
-        catch (Exception ex) { MessageBox.Show("起動できませんでした。\n" + ex.Message, "AudioCulprit"); Shutdown(1); }
+        catch (Exception ex) { MessageBox.Show(UiText.Get("StartupFailed") + ex.Message, "AudioCulprit"); Shutdown(1); }
     }
     private void Save(AudioEvent e)
     {
@@ -118,7 +125,7 @@ public partial class App : Application
             {
                 writer!.Save(e);
             }
-            catch (Exception ex) { Dispatcher.BeginInvoke(() => (MainWindow as MainWindow)?.ShowError("履歴を保存できません: " + ex.Message)); }
+            catch (Exception ex) { Dispatcher.BeginInvoke(() => (MainWindow as MainWindow)?.ShowError(UiText.Get("HistorySaveFailed") + ex.Message)); }
         }
     }
     internal System.Threading.Tasks.Task ClearHistoryAsync()
@@ -152,15 +159,16 @@ public partial class App : Application
     private void UpdateTrayState()
     {
         if (tray != null)
-            tray.Text = Monitor.Enabled ? "AudioCulprit · 監視中" : "AudioCulprit · 監視停止中";
+            tray.Text = Monitor.Enabled ? UiText.Get("TrayActive") : UiText.Get("TrayPaused");
         if (monitorToggle != null)
         {
-            monitorToggle.Text = Monitor.Enabled ? "監視を停止（現在：監視中）" : "監視を開始（現在：停止中）";
+            monitorToggle.Text = Monitor.Enabled ? UiText.Get("TrayStop") : UiText.Get("TrayStart");
             monitorToggle.Checked = Monitor.Enabled;
         }
     }
     protected override void OnExit(ExitEventArgs e)
     {
+        StopUpdateChecks();
         housekeeping.Stop();
         quick?.Close();
         hotkey?.Dispose();

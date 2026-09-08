@@ -47,12 +47,12 @@ public sealed record AudioEvent
     }
     public string TimeLabel => StartTimeUtc.ToLocalTime().ToString("HH:mm:ss");
     public string SourceLabel => EventType == "SystemSounds"
-        ? "Windows システム音 · 原因のアプリ・機器は未特定"
-        : ProcessId > 0 ? $"音声セッションの PID: {ProcessId} · {ProcessName}"
-        : "音源プロセスを取得できませんでした";
-    public string DurationLabel => DurationMs >= 60000 ? $"{(int)(DurationMs / 60000)}分{DurationMs / 1000 % 60:00}秒" : $"{DurationMs / 1000:0.00}秒";
+        ? UiText.Get("SystemSource")
+        : ProcessId > 0 ? UiText.Format("SessionSource", ProcessId, ProcessName)
+        : UiText.Get("SourceUnknown");
+    public string DurationLabel => DurationMs >= 60000 ? UiText.Format("MinutesDuration", (int)(DurationMs / 60000), DurationMs / 1000 % 60) : UiText.Format("SecondsDuration", DurationMs / 1000);
     public string PeakLabel => $"{MaxPeak:P0}";
-    public string StateLabel => EndTimeUtc != null ? "終了" : DurationMs >= 30000 ? "継続再生" : "再生中";
+    public string StateLabel => EndTimeUtc != null ? UiText.Get("Ended") : DurationMs >= 30000 ? UiText.Get("Continuous") : UiText.Get("Playing");
 }
 public sealed record IgnoreRule(string ProcessName, string? ProcessPath)
 {

@@ -1,0 +1,343 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  <data xml:space="preserve" name="AppTitle">
+    <value>AudioCulprit — Sound Investigator</value>
+  </data>
+  <data xml:space="preserve" name="Settings">
+    <value>Settings</value>
+  </data>
+  <data xml:space="preserve" name="Tagline">
+    <value>MYSTERY SOUND INVESTIGATOR</value>
+  </data>
+  <data xml:space="preserve" name="RecentSound">
+    <value>What was that sound?</value>
+  </data>
+  <data xml:space="preserve" name="Waiting">
+    <value>Waiting for a sound</value>
+  </data>
+  <data xml:space="preserve" name="SourcePlaceholder">
+    <value>The source of playback audio will appear here.</value>
+  </data>
+  <data xml:space="preserve" name="CandidateHint">
+    <value>Shows likely sound sources. Notification content cannot be identified.</value>
+  </data>
+  <data xml:space="preserve" name="ViewDetails">
+    <value>View details</value>
+  </data>
+  <data xml:space="preserve" name="SuspiciousSounds">
+    <value>Suspicious sounds</value>
+  </data>
+  <data xml:space="preserve" name="CurrentlyPlaying">
+    <value>Now playing</value>
+  </data>
+  <data xml:space="preserve" name="SelectedDetails">
+    <value>Selected sound details</value>
+  </data>
+  <data xml:space="preserve" name="History">
+    <value>Sound history</value>
+  </data>
+  <data xml:space="preserve" name="Time">
+    <value>Time</value>
+  </data>
+  <data xml:space="preserve" name="Application">
+    <value>App</value>
+  </data>
+  <data xml:space="preserve" name="Duration">
+    <value>Duration</value>
+  </data>
+  <data xml:space="preserve" name="State">
+    <value>State</value>
+  </data>
+  <data xml:space="preserve" name="Output">
+    <value>Output</value>
+  </data>
+  <data xml:space="preserve" name="Privacy">
+    <value>No recording · No microphone access · History stays local</value>
+  </data>
+  <data xml:space="preserve" name="AllTime">
+    <value>All time</value>
+  </data>
+  <data xml:space="preserve" name="Last30Seconds">
+    <value>Last 30 sec</value>
+  </data>
+  <data xml:space="preserve" name="LastMinute">
+    <value>Last minute</value>
+  </data>
+  <data xml:space="preserve" name="Last5Minutes">
+    <value>Last 5 min</value>
+  </data>
+  <data xml:space="preserve" name="ShortOnly">
+    <value>Short sounds only</value>
+  </data>
+  <data xml:space="preserve" name="MonitoringStopped">
+    <value>Monitoring is paused</value>
+  </data>
+  <data xml:space="preserve" name="NoPlayback">
+    <value>No playback detected</value>
+  </data>
+  <data xml:space="preserve" name="NoDetectionPaused">
+    <value>Detection paused</value>
+  </data>
+  <data xml:space="preserve" name="PausedStatus">
+    <value>Paused · New sounds are not recorded</value>
+  </data>
+  <data xml:space="preserve" name="ActiveHeading">
+    <value>● Monitoring</value>
+  </data>
+  <data xml:space="preserve" name="PausedHeading">
+    <value>■ Monitoring paused</value>
+  </data>
+  <data xml:space="preserve" name="ActiveHint">
+    <value>Detecting playback audio and logging its source.</value>
+  </data>
+  <data xml:space="preserve" name="PausedHint">
+    <value>New sounds are not recorded. Saved history is shown below.</value>
+  </data>
+  <data xml:space="preserve" name="StopButton">
+    <value>■ Pause monitoring</value>
+  </data>
+  <data xml:space="preserve" name="StartButton">
+    <value>▶ Start monitoring</value>
+  </data>
+  <data xml:space="preserve" name="StopHint">
+    <value>Pause sound detection and logging</value>
+  </data>
+  <data xml:space="preserve" name="StartHint">
+    <value>Start sound detection and logging</value>
+  </data>
+  <data xml:space="preserve" name="PreviousSound">
+    <value>Last sound before pause</value>
+  </data>
+  <data xml:space="preserve" name="ActiveTitle">
+    <value>AudioCulprit — Monitoring</value>
+  </data>
+  <data xml:space="preserve" name="PausedTitle">
+    <value>AudioCulprit — Paused</value>
+  </data>
+  <data xml:space="preserve" name="Unavailable">
+    <value>Unavailable</value>
+  </data>
+  <data xml:space="preserve" name="PlayingAtOpen">
+    <value>Playing when opened</value>
+  </data>
+  <data xml:space="preserve" name="OpenFolder">
+    <value>Open file location</value>
+  </data>
+  <data xml:space="preserve" name="IgnoreApp">
+    <value>Ignore this app</value>
+  </data>
+  <data xml:space="preserve" name="MuteHint">
+    <value>Applies to existing audio sessions from the same executable.</value>
+  </data>
+  <data xml:space="preserve" name="MuteApp">
+    <value>Mute this app</value>
+  </data>
+  <data xml:space="preserve" name="Unmute">
+    <value>Unmute</value>
+  </data>
+  <data xml:space="preserve" name="MuteNotFound">
+    <value>No matching audio sessions found. Start playback in the app and try again.</value>
+  </data>
+  <data xml:space="preserve" name="MuteFailed">
+    <value>Could not apply the change (some sessions may have changed): </value>
+  </data>
+  <data xml:space="preserve" name="OpenMixer">
+    <value>Open Windows volume mixer</value>
+  </data>
+  <data xml:space="preserve" name="SoundDetails">
+    <value>Sound details</value>
+  </data>
+  <data xml:space="preserve" name="HotkeyOption">
+    <value>Show recent sound with Ctrl+Alt+A (F10 if A is unavailable)</value>
+  </data>
+  <data xml:space="preserve" name="StartupOption">
+    <value>Start in the system tray when I sign in to Windows</value>
+  </data>
+  <data xml:space="preserve" name="IgnoredApps">
+    <value>Ignored apps (still logged in history)</value>
+  </data>
+  <data xml:space="preserve" name="UnignoreApp">
+    <value>Stop ignoring the selected app</value>
+  </data>
+  <data xml:space="preserve" name="RetentionHint">
+    <value>History is kept for 7 days, up to 10,000 entries.
+No audio is recorded and the microphone is never accessed.
+Polling interval: 50 ms / Short-sound merge interval: 500 ms</value>
+  </data>
+  <data xml:space="preserve" name="ClearHistory">
+    <value>Delete all history</value>
+  </data>
+  <data xml:space="preserve" name="ClearConfirmation">
+    <value>Delete all saved sound history? This cannot be undone.
+Sounds currently playing will be logged again when they end.</value>
+  </data>
+  <data xml:space="preserve" name="ClearTitle">
+    <value>Delete history</value>
+  </data>
+  <data xml:space="preserve" name="ClearFailed">
+    <value>Could not delete history</value>
+  </data>
+  <data xml:space="preserve" name="StorageLocation">
+    <value>Storage location: </value>
+  </data>
+  <data xml:space="preserve" name="Licenses">
+    <value>Licenses</value>
+  </data>
+  <data xml:space="preserve" name="SettingsTitle">
+    <value>AudioCulprit settings</value>
+  </data>
+  <data xml:space="preserve" name="QuickTitle">
+    <value>What was that sound? · AudioCulprit</value>
+  </data>
+  <data xml:space="preserve" name="QuickPaused">
+    <value>Paused · Saved sound</value>
+  </data>
+  <data xml:space="preserve" name="NoHistory">
+    <value>No sounds recorded yet</value>
+  </data>
+  <data xml:space="preserve" name="Details">
+    <value>Details</value>
+  </data>
+  <data xml:space="preserve" name="SaveFailed">
+    <value>Could not save</value>
+  </data>
+  <data xml:space="preserve" name="Close">
+    <value>Close (Esc)</value>
+  </data>
+  <data xml:space="preserve" name="Disabled">
+    <value>Disabled</value>
+  </data>
+  <data xml:space="preserve" name="HotkeyUnavailable">
+    <value>Could not register the shortcut. Another app may be using it.</value>
+  </data>
+  <data xml:space="preserve" name="HistorySaveFailed">
+    <value>Could not save history: </value>
+  </data>
+  <data xml:space="preserve" name="Open">
+    <value>Open</value>
+  </data>
+  <data xml:space="preserve" name="StopMonitoring">
+    <value>Pause monitoring</value>
+  </data>
+  <data xml:space="preserve" name="Exit">
+    <value>Exit</value>
+  </data>
+  <data xml:space="preserve" name="TrayTitle">
+    <value>AudioCulprit · Sound Investigator</value>
+  </data>
+  <data xml:space="preserve" name="StartupFailed">
+    <value>Could not start AudioCulprit.
+</value>
+  </data>
+  <data xml:space="preserve" name="TrayActive">
+    <value>AudioCulprit · Monitoring</value>
+  </data>
+  <data xml:space="preserve" name="TrayPaused">
+    <value>AudioCulprit · Paused</value>
+  </data>
+  <data xml:space="preserve" name="TrayStop">
+    <value>Pause monitoring (currently active)</value>
+  </data>
+  <data xml:space="preserve" name="TrayStart">
+    <value>Start monitoring (currently paused)</value>
+  </data>
+  <data xml:space="preserve" name="SystemSource">
+    <value>Windows system sound · Originating app or device unknown</value>
+  </data>
+  <data xml:space="preserve" name="SourceUnknown">
+    <value>Could not identify the source process</value>
+  </data>
+  <data xml:space="preserve" name="Continuous">
+    <value>Continuous</value>
+  </data>
+  <data xml:space="preserve" name="Playing">
+    <value>Playing</value>
+  </data>
+  <data xml:space="preserve" name="Preparing">
+    <value>Preparing monitoring</value>
+  </data>
+  <data xml:space="preserve" name="InitializingRetry">
+    <value>Retrying audio initialization: </value>
+  </data>
+  <data xml:space="preserve" name="WaitingDevice">
+    <value>Waiting for an output device</value>
+  </data>
+  <data xml:space="preserve" name="MonitoringPaused">
+    <value>Monitoring is paused</value>
+  </data>
+  <data xml:space="preserve" name="MonitoringRetry">
+    <value>Retrying monitoring: </value>
+  </data>
+  <data xml:space="preserve" name="SecondsAgo">
+    <value>{0:0} sec ago</value>
+  </data>
+  <data xml:space="preserve" name="MinutesAgo">
+    <value>{0:0} min ago</value>
+  </data>
+  <data xml:space="preserve" name="HoursAgo">
+    <value>{0:0} hr ago</value>
+  </data>
+  <data xml:space="preserve" name="DaysAgo">
+    <value>{0:0} days ago</value>
+  </data>
+  <data xml:space="preserve" name="SessionSource">
+    <value>Audio session PID: {0} · {1}</value>
+  </data>
+  <data xml:space="preserve" name="MinutesDuration">
+    <value>{0} min {1:00} sec</value>
+  </data>
+  <data xml:space="preserve" name="SecondsDuration">
+    <value>{0:0.00} sec</value>
+  </data>
+  <data xml:space="preserve" name="DeviceStatus">
+    <value>Monitoring · Output devices: {0}</value>
+  </data>
+  <data xml:space="preserve" name="HotkeyStatus">
+    <value>{0} shows the most recent sound</value>
+  </data>
+  <data xml:space="preserve" name="MutedCount">
+    <value>Muted {0} audio session(s).</value>
+  </data>
+  <data xml:space="preserve" name="UnmutedCount">
+    <value>Unmuted {0} audio session(s).</value>
+  </data>
+  <data xml:space="preserve" name="Ended">
+    <value>Ended</value>
+  </data>
+  <data name="EventDetails" xml:space="preserve"><value>Process name: {0}
+Process path: {1}
+PID: {2}
+Session ID: {3}
+Started: {4:yyyy-MM-dd HH:mm:ss.fff}
+Ended: {5}
+Duration: {6}
+Maximum peak: {7}
+Session volume: {8:P0}
+Muted: {9}
+Output: {10}
+Device ID: {11}
+Event type: {12}</value></data>
+  <data name="Updates" xml:space="preserve"><value>AudioCulprit updates</value></data>
+  <data name="CheckUpdates" xml:space="preserve"><value>Check for updates</value></data>
+  <data name="AutomaticUpdates" xml:space="preserve"><value>Automatically check for updates (once a day)</value></data>
+  <data name="UpdatePrivacy" xml:space="preserve"><value>Contacts GitHub for release information. Audio and sound history are never sent. Downloads are manual.</value></data>
+  <data name="InstalledVersion" xml:space="preserve"><value>Installed version: {0}</value></data>
+  <data name="CheckingUpdates" xml:space="preserve"><value>Checking for updates…</value></data>
+  <data name="OpenRelease" xml:space="preserve"><value>Open release page</value></data>
+  <data name="UpdateAvailable" xml:space="preserve"><value>Version {0} is available</value></data>
+  <data name="UpdateNotification" xml:space="preserve"><value>Version {0} is available. Click to open the release page.</value></data>
+  <data name="NoUpdates" xml:space="preserve"><value>No newer stable release was found. Installed version: {0}</value></data>
+  <data name="UpdateCheckFailed" xml:space="preserve"><value>Could not check for updates. Please try again later.</value></data>
+</root>

@@ -1,0 +1,70 @@
+AudioCulprit — Sound Investigator / 音の犯人
+
+ENGLISH
+
+Getting started
+1. Extract the entire ZIP to a folder of your choice.
+2. Open the extracted folder and run AudioCulprit.exe.
+Windows 10 / 11, x64. No installation, administrator rights or separate
+.NET installation is required. Extract the ZIP before running the app.
+The app uses Japanese when your Windows display language is Japanese;
+otherwise it uses English.
+
+Using the app
+- "What was that sound?" shows a likely source of a recent sound.
+- Ctrl+Alt+A opens a small recent-sound window (Ctrl+Alt+F10 if unavailable).
+- Double-click a history entry to view details, ignore an app or mute it.
+- Closing the main window keeps the app in the system tray.
+  Right-click its tray icon and choose Exit to quit completely.
+
+Updates
+The app checks GitHub for a newer stable release once a day by default.
+You can disable automatic checks or check manually in Settings.
+Click an update notification to open the release page. Download and extract
+the new ZIP, exit the running app from the tray, then run the new EXE.
+If you enabled startup at sign-in and moved the EXE, turn that setting off
+and on again from the new copy to update its location.
+
+Privacy
+The app does not record audio or access the microphone. History and settings
+are stored in %LocalAppData%\AudioCulprit and remain when you replace the EXE.
+Update checks contact GitHub but do not send audio, history or process details.
+You can delete saved history in Settings.
+
+Third-party license texts are in licenses/ and THIRD-PARTY-NOTICES.md.
+Releases: https://github.com/mitarashi-dango/audio-culprit/releases
+Issues: https://github.com/mitarashi-dango/audio-culprit/issues
+
+日本語
+
+起動方法
+1. ZIP全体を好きな場所に展開してください。
+2. 展開したフォルダ内の AudioCulprit.exe を起動してください。
+Windows 10 / 11（x64）用です。インストール・管理者権限・.NETの別途
+インストールは不要です。ZIP内から直接起動せず、先に展開してください。
+Windowsの表示言語が日本語なら日本語、それ以外なら英語になります。
+
+使い方
+- 「今の音？」に最近の音の発生元候補が表示されます。
+- Ctrl+Alt+Aで小窓を表示します。使用中ならCtrl+Alt+F10を使います。
+- 履歴をダブルクリックすると詳細・無視・ミュートを操作できます。
+- ウィンドウの×はトレイに収納します。完全終了はトレイアイコンを
+  右クリックして「終了」を選んでください。
+
+更新
+初期状態では1日1回、GitHubで新しい通常リリースを確認します。
+設定から自動確認の停止・手動確認ができます。
+更新通知からリリースページを開き、新しいZIPをダウンロード・展開し、
+起動中のアプリをトレイから終了してから新しいEXEを起動してください。
+ログイン時の自動起動を有効にしていてEXEの場所を変更した場合は、
+新しいEXEの設定で自動起動を一度オフにしてからオンにしてください。
+
+保存とプライバシー
+音声は録音せず、マイクにもアクセスしません。履歴・設定は
+%LocalAppData%\AudioCulprit に保存され、EXEを交換しても引き継がれます。
+更新確認ではGitHubへ通信しますが、音声・履歴・プロセス情報は送りません。
+保存済み履歴は設定から削除できます。
+
+第三者ライセンスは licenses/ と THIRD-PARTY-NOTICES.md を参照してください。
+配布: https://github.com/mitarashi-dango/audio-culprit/releases
+不具合報告: https://github.com/mitarashi-dango/audio-culprit/issues

@@ -47,7 +47,7 @@ public sealed class AudioMonitorService : IDisposable, IMMNotificationClient
         return result.Task;
     }
     public IReadOnlyList<AudioEvent> Active => active;
-    public string Status { get; private set; } = "監視を準備しています";
+    public string Status { get; private set; } = UiText.Get("Preparing");
     public bool Enabled
     {
         get => enabled; set
@@ -194,7 +194,7 @@ public sealed class AudioMonitorService : IDisposable, IMMNotificationClient
                         }
                         catch (Exception ex)
                         {
-                            Status = "音声監視の初期化を再試行中: " + ex.Message;
+                            Status = UiText.Get("InitializingRetry") + ex.Message;
                             try { enumerator?.Dispose(); } catch { }
                             enumerator = null;
                             stop.Wait(2000);
@@ -231,9 +231,9 @@ public sealed class AudioMonitorService : IDisposable, IMMNotificationClient
                         catch (System.Runtime.InteropServices.COMException) { Remove(d.Endpoint.ID); refresh = true; break; }
                     }
                     active = snapshot.ToArray();
-                    Status = enabled ? devices.Count == 0 ? "出力デバイスを待機中" : $"監視中 · {devices.Count} 出力デバイス" : "監視は一時停止中";
+                    Status = enabled ? devices.Count == 0 ? UiText.Get("WaitingDevice") : UiText.Format("DeviceStatus", devices.Count) : UiText.Get("MonitoringPaused");
                 }
-                catch (Exception ex) { Status = "監視を再試行中: " + ex.Message; refresh = true; }
+                catch (Exception ex) { Status = UiText.Get("MonitoringRetry") + ex.Message; refresh = true; }
                 stop.Wait(50);
             }
         }

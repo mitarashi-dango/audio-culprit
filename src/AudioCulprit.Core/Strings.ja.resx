@@ -1,0 +1,343 @@
+<?xml version='1.0' encoding='utf-8'?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms</value>
+  </resheader>
+  <data xml:space="preserve" name="AppTitle">
+    <value>AudioCulprit — 音の犯人</value>
+  </data>
+  <data xml:space="preserve" name="Settings">
+    <value>設定</value>
+  </data>
+  <data xml:space="preserve" name="Tagline">
+    <value>音の犯人  /  MYSTERY SOUND INVESTIGATOR</value>
+  </data>
+  <data xml:space="preserve" name="RecentSound">
+    <value>今の音？</value>
+  </data>
+  <data xml:space="preserve" name="Waiting">
+    <value>次の音を待っています</value>
+  </data>
+  <data xml:space="preserve" name="SourcePlaceholder">
+    <value>再生音の発生元が、ここに表示されます。</value>
+  </data>
+  <data xml:space="preserve" name="CandidateHint">
+    <value>発生元の候補を表示します。通知の内容までは特定しません。</value>
+  </data>
+  <data xml:space="preserve" name="ViewDetails">
+    <value>詳細を見る</value>
+  </data>
+  <data xml:space="preserve" name="SuspiciousSounds">
+    <value>怪しい音</value>
+  </data>
+  <data xml:space="preserve" name="CurrentlyPlaying">
+    <value>現在再生中</value>
+  </data>
+  <data xml:space="preserve" name="SelectedDetails">
+    <value>選択した音の詳細</value>
+  </data>
+  <data xml:space="preserve" name="History">
+    <value>音声履歴</value>
+  </data>
+  <data xml:space="preserve" name="Time">
+    <value>時刻</value>
+  </data>
+  <data xml:space="preserve" name="Application">
+    <value>アプリ</value>
+  </data>
+  <data xml:space="preserve" name="Duration">
+    <value>長さ</value>
+  </data>
+  <data xml:space="preserve" name="State">
+    <value>状態</value>
+  </data>
+  <data xml:space="preserve" name="Output">
+    <value>出力</value>
+  </data>
+  <data xml:space="preserve" name="Privacy">
+    <value>録音なし · マイク監視なし · 履歴は端末内</value>
+  </data>
+  <data xml:space="preserve" name="AllTime">
+    <value>全期間</value>
+  </data>
+  <data xml:space="preserve" name="Last30Seconds">
+    <value>過去30秒</value>
+  </data>
+  <data xml:space="preserve" name="LastMinute">
+    <value>過去1分</value>
+  </data>
+  <data xml:space="preserve" name="Last5Minutes">
+    <value>過去5分</value>
+  </data>
+  <data xml:space="preserve" name="ShortOnly">
+    <value>短い音だけ</value>
+  </data>
+  <data xml:space="preserve" name="MonitoringStopped">
+    <value>監視を停止しています</value>
+  </data>
+  <data xml:space="preserve" name="NoPlayback">
+    <value>現在、再生音は検出されていません</value>
+  </data>
+  <data xml:space="preserve" name="NoDetectionPaused">
+    <value>監視停止中のため検出していません</value>
+  </data>
+  <data xml:space="preserve" name="PausedStatus">
+    <value>監視停止中 · 新しい音は記録されません</value>
+  </data>
+  <data xml:space="preserve" name="ActiveHeading">
+    <value>● 監視中</value>
+  </data>
+  <data xml:space="preserve" name="PausedHeading">
+    <value>■ 監視停止中</value>
+  </data>
+  <data xml:space="preserve" name="ActiveHint">
+    <value>再生音を検出して、発生元を記録しています。</value>
+  </data>
+  <data xml:space="preserve" name="PausedHint">
+    <value>新しい音は記録されません。下には保存済みの履歴を表示しています。</value>
+  </data>
+  <data xml:space="preserve" name="StopButton">
+    <value>■ 監視を停止</value>
+  </data>
+  <data xml:space="preserve" name="StartButton">
+    <value>▶ 監視を開始</value>
+  </data>
+  <data xml:space="preserve" name="StopHint">
+    <value>音の検出と新しい記録を停止します</value>
+  </data>
+  <data xml:space="preserve" name="StartHint">
+    <value>音の検出と記録を開始します</value>
+  </data>
+  <data xml:space="preserve" name="PreviousSound">
+    <value>停止前の音（履歴）</value>
+  </data>
+  <data xml:space="preserve" name="ActiveTitle">
+    <value>AudioCulprit — 監視中</value>
+  </data>
+  <data xml:space="preserve" name="PausedTitle">
+    <value>AudioCulprit — 監視停止中</value>
+  </data>
+  <data xml:space="preserve" name="Unavailable">
+    <value>取得できません</value>
+  </data>
+  <data xml:space="preserve" name="PlayingAtOpen">
+    <value>再生中（表示時点）</value>
+  </data>
+  <data xml:space="preserve" name="OpenFolder">
+    <value>ファイルの場所を開く</value>
+  </data>
+  <data xml:space="preserve" name="IgnoreApp">
+    <value>このアプリを無視</value>
+  </data>
+  <data xml:space="preserve" name="MuteHint">
+    <value>同じ実行ファイルの、現在存在する音声出力に適用します。</value>
+  </data>
+  <data xml:space="preserve" name="MuteApp">
+    <value>このアプリをミュート</value>
+  </data>
+  <data xml:space="preserve" name="Unmute">
+    <value>ミュート解除</value>
+  </data>
+  <data xml:space="preserve" name="MuteNotFound">
+    <value>対象の音声出力が見つかりません。アプリを再生してからお試しください。</value>
+  </data>
+  <data xml:space="preserve" name="MuteFailed">
+    <value>変更できませんでした（一部だけ変更された可能性があります）: </value>
+  </data>
+  <data xml:space="preserve" name="OpenMixer">
+    <value>Windows音量ミキサーを開く</value>
+  </data>
+  <data xml:space="preserve" name="SoundDetails">
+    <value>音の詳細</value>
+  </data>
+  <data xml:space="preserve" name="HotkeyOption">
+    <value>ホットキーで「今の音？」を表示（Aが使用中ならF10）</value>
+  </data>
+  <data xml:space="preserve" name="StartupOption">
+    <value>Windowsログイン時に起動（トレイに常駐）</value>
+  </data>
+  <data xml:space="preserve" name="IgnoredApps">
+    <value>無視するアプリ（履歴には残ります）</value>
+  </data>
+  <data xml:space="preserve" name="UnignoreApp">
+    <value>選択したアプリの無視を解除</value>
+  </data>
+  <data xml:space="preserve" name="RetentionHint">
+    <value>履歴は7日間・最大10,000件を保持します。
+音声自体は保存せず、マイクにもアクセスしません。
+監視間隔 50ms / 短音の統合間隔 500ms</value>
+  </data>
+  <data xml:space="preserve" name="ClearHistory">
+    <value>すべての履歴を削除</value>
+  </data>
+  <data xml:space="preserve" name="ClearConfirmation">
+    <value>保存済みのすべての音声履歴を削除します。元に戻せません。
+再生中の音は終了後に新たに記録されます。</value>
+  </data>
+  <data xml:space="preserve" name="ClearTitle">
+    <value>履歴の削除</value>
+  </data>
+  <data xml:space="preserve" name="ClearFailed">
+    <value>履歴を削除できませんでした</value>
+  </data>
+  <data xml:space="preserve" name="StorageLocation">
+    <value>保存先: </value>
+  </data>
+  <data xml:space="preserve" name="Licenses">
+    <value>ライセンス</value>
+  </data>
+  <data xml:space="preserve" name="SettingsTitle">
+    <value>AudioCulprit の設定</value>
+  </data>
+  <data xml:space="preserve" name="QuickTitle">
+    <value>今の音？ · AudioCulprit</value>
+  </data>
+  <data xml:space="preserve" name="QuickPaused">
+    <value>監視停止中 · 保存済みの音</value>
+  </data>
+  <data xml:space="preserve" name="NoHistory">
+    <value>まだ音の記録がありません</value>
+  </data>
+  <data xml:space="preserve" name="Details">
+    <value>詳細</value>
+  </data>
+  <data xml:space="preserve" name="SaveFailed">
+    <value>保存できませんでした</value>
+  </data>
+  <data xml:space="preserve" name="Close">
+    <value>閉じる（Esc）</value>
+  </data>
+  <data xml:space="preserve" name="Disabled">
+    <value>無効</value>
+  </data>
+  <data xml:space="preserve" name="HotkeyUnavailable">
+    <value>登録できません。他のアプリで使われている可能性があります。</value>
+  </data>
+  <data xml:space="preserve" name="HistorySaveFailed">
+    <value>履歴を保存できません: </value>
+  </data>
+  <data xml:space="preserve" name="Open">
+    <value>開く</value>
+  </data>
+  <data xml:space="preserve" name="StopMonitoring">
+    <value>監視を停止</value>
+  </data>
+  <data xml:space="preserve" name="Exit">
+    <value>終了</value>
+  </data>
+  <data xml:space="preserve" name="TrayTitle">
+    <value>AudioCulprit · 音の犯人</value>
+  </data>
+  <data xml:space="preserve" name="StartupFailed">
+    <value>起動できませんでした。
+</value>
+  </data>
+  <data xml:space="preserve" name="TrayActive">
+    <value>AudioCulprit · 監視中</value>
+  </data>
+  <data xml:space="preserve" name="TrayPaused">
+    <value>AudioCulprit · 監視停止中</value>
+  </data>
+  <data xml:space="preserve" name="TrayStop">
+    <value>監視を停止（現在：監視中）</value>
+  </data>
+  <data xml:space="preserve" name="TrayStart">
+    <value>監視を開始（現在：停止中）</value>
+  </data>
+  <data xml:space="preserve" name="SystemSource">
+    <value>Windows システム音 · 原因のアプリ・機器は未特定</value>
+  </data>
+  <data xml:space="preserve" name="SourceUnknown">
+    <value>音源プロセスを取得できませんでした</value>
+  </data>
+  <data xml:space="preserve" name="Continuous">
+    <value>継続再生</value>
+  </data>
+  <data xml:space="preserve" name="Playing">
+    <value>再生中</value>
+  </data>
+  <data xml:space="preserve" name="Preparing">
+    <value>監視を準備しています</value>
+  </data>
+  <data xml:space="preserve" name="InitializingRetry">
+    <value>音声監視の初期化を再試行中: </value>
+  </data>
+  <data xml:space="preserve" name="WaitingDevice">
+    <value>出力デバイスを待機中</value>
+  </data>
+  <data xml:space="preserve" name="MonitoringPaused">
+    <value>監視は一時停止中</value>
+  </data>
+  <data xml:space="preserve" name="MonitoringRetry">
+    <value>監視を再試行中: </value>
+  </data>
+  <data xml:space="preserve" name="SecondsAgo">
+    <value>{0:0}秒前</value>
+  </data>
+  <data xml:space="preserve" name="MinutesAgo">
+    <value>{0:0}分前</value>
+  </data>
+  <data xml:space="preserve" name="HoursAgo">
+    <value>{0:0}時間前</value>
+  </data>
+  <data xml:space="preserve" name="DaysAgo">
+    <value>{0:0}日前</value>
+  </data>
+  <data xml:space="preserve" name="SessionSource">
+    <value>音声セッションの PID: {0} · {1}</value>
+  </data>
+  <data xml:space="preserve" name="MinutesDuration">
+    <value>{0}分{1:00}秒</value>
+  </data>
+  <data xml:space="preserve" name="SecondsDuration">
+    <value>{0:0.00}秒</value>
+  </data>
+  <data xml:space="preserve" name="DeviceStatus">
+    <value>監視中 · {0} 出力デバイス</value>
+  </data>
+  <data xml:space="preserve" name="HotkeyStatus">
+    <value>{0} で「今の音？」を表示</value>
+  </data>
+  <data xml:space="preserve" name="MutedCount">
+    <value>{0} 件の音声出力をミュートしました。</value>
+  </data>
+  <data xml:space="preserve" name="UnmutedCount">
+    <value>{0} 件の音声出力をミュート解除しました。</value>
+  </data>
+  <data xml:space="preserve" name="Ended">
+    <value>終了</value>
+  </data>
+  <data name="EventDetails" xml:space="preserve"><value>Process Name: {0}
+Process Path: {1}
+PID: {2}
+Session ID: {3}
+開始: {4:yyyy-MM-dd HH:mm:ss.fff}
+終了: {5}
+再生時間: {6}
+最大 Peak: {7}
+Session Volume: {8:P0}
+Mute: {9}
+出力: {10}
+Device ID: {11}
+Event Type: {12}</value></data>
+  <data name="Updates" xml:space="preserve"><value>AudioCulprit の更新</value></data>
+  <data name="CheckUpdates" xml:space="preserve"><value>更新を確認</value></data>
+  <data name="AutomaticUpdates" xml:space="preserve"><value>更新を自動確認する（1日1回）</value></data>
+  <data name="UpdatePrivacy" xml:space="preserve"><value>GitHubからリリース情報を取得します。音声や音声履歴は送信しません。ダウンロードは手動です。</value></data>
+  <data name="InstalledVersion" xml:space="preserve"><value>現在のバージョン: {0}</value></data>
+  <data name="CheckingUpdates" xml:space="preserve"><value>更新を確認しています…</value></data>
+  <data name="OpenRelease" xml:space="preserve"><value>リリースページを開く</value></data>
+  <data name="UpdateAvailable" xml:space="preserve"><value>バージョン {0} が公開されています</value></data>
+  <data name="UpdateNotification" xml:space="preserve"><value>バージョン {0} が公開されています。クリックするとリリースページを開きます。</value></data>
+  <data name="NoUpdates" xml:space="preserve"><value>新しい通常リリースはありません。現在のバージョン: {0}</value></data>
+  <data name="UpdateCheckFailed" xml:space="preserve"><value>更新を確認できませんでした。しばらくしてから再度お試しください。</value></data>
+</root>

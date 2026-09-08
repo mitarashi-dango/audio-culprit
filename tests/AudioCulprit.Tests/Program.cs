@@ -15,6 +15,8 @@ if (args.Contains("--tone"))
 }
 var passed = 0;
 void Check(bool value, string name) { if (!value) throw new Exception("FAIL: " + name); Console.WriteLine("PASS: " + name); passed++; }
+LocalizationTests.Run(Check);
+UpdateTests.Run(Check);
 var utc = DateTime.UtcNow;
 AudioEvent Meta(string name = "test.exe") => new() { ProcessName = name, DisplayName = name, SessionId = "test", DeviceName = "test output" };
 var d = new AudioActivityDetector(Meta());
