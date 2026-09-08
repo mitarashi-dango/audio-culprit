@@ -11,7 +11,7 @@ AudioCulpritは、そんな音の発生元を探すWindows用ツールです。
 
 **[最新版をダウンロード](https://github.com/mitarashi-dango/audio-culprit/releases/latest)**
 
-Windows 10 / 11（64ビット）対応。
+Windows 11（64ビット）で動作確認済み。Windows 10（64ビット）は未検証。
 
 ZIPを展開し、フォルダ内の **`AudioCulprit.exe`** を起動してください。インストール・管理者権限・.NETの別途インストールは不要です。
 

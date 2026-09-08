@@ -5,7 +5,8 @@ ENGLISH
 Getting started
 1. Extract the entire ZIP to a folder of your choice.
 2. Open the extracted folder and run AudioCulprit.exe.
-Windows 10 / 11, x64. No installation, administrator rights or separate
+Tested on Windows 11 (x64). Windows 10 (x64) has not been tested.
+No installation, administrator rights or separate
 .NET installation is required. Extract the ZIP before running the app.
 The app uses Japanese when your Windows display language is Japanese;
 otherwise it uses English.
@@ -40,7 +41,8 @@ Issues: https://github.com/mitarashi-dango/audio-culprit/issues
 起動方法
 1. ZIP全体を好きな場所に展開してください。
 2. 展開したフォルダ内の AudioCulprit.exe を起動してください。
-Windows 10 / 11（x64）用です。インストール・管理者権限・.NETの別途
+Windows 11（x64）で動作確認済み。Windows 10（x64）は未検証です。
+インストール・管理者権限・.NETの別途
 インストールは不要です。ZIP内から直接起動せず、先に展開してください。
 Windowsの表示言語が日本語なら日本語、それ以外なら英語になります。
 
