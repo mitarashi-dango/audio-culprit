@@ -55,6 +55,14 @@ snapshot.Clear();
 Check(snapshot.Latest([]) == null, "cleared history absent from popup cache");
 snapshot.Add(yesterday with { StartTimeUtc = utc.AddDays(-8) });
 Check(snapshot.Latest([]) == null, "popup cache excludes expired history");
+Check(snapshot.Read().Length == 0, "main history excludes expired events before housekeeping");
+snapshot.Clear();
+for (var i = 0; i < 10002; i++)
+    snapshot.Add(recentNotice with { Id = i.ToString(), StartTimeUtc = utc.AddMilliseconds(-i) });
+var retained = snapshot.Read();
+Check(retained.Length == 10000 && retained[0].Id == "0" && retained[^1].Id == "9999", "history limit retains newest starts regardless of completion order");
+snapshot.Clear();
+Check(snapshot.Read().Length == 0 && snapshot.Latest([]) == null, "clear removes history from both main and popup views");
 var attempts = 0;
 var registrations = 0;
 using (var recovering = new AudioMonitorService(
@@ -83,6 +91,21 @@ try
         repo.Save(notification with { DurationMs=500, EndTimeUtc=utc.AddMilliseconds(500) });
         repo.Save(notification);
         Check(repo.Load()[0].DurationMs==500,"stale checkpoint cannot overwrite completed event");
+        repo.Save(notification with { DurationMs = 600 });
+        Check(repo.Load()[0].DurationMs == 500, "completed event cannot be reopened by a checkpoint");
+        var merging = new AudioActivityDetector(Meta("merge.exe"));
+        merging.Sample(0, utc, .1f);
+        merging.Sample(100, utc.AddMilliseconds(100), 0);
+        merging.Sample(350, utc.AddMilliseconds(350), 0);
+        var pending = merging.Snapshot!;
+        repo.Save(pending with { EndTimeUtc = null });
+        merging.Sample(400, utc.AddMilliseconds(400), .2f);
+        var final = merging.Finish()!;
+        repo.Save(final);
+        repo.Save(pending with { EndTimeUtc = null });
+        Check(repo.Load().Single(e => e.Id == final.Id) == final, "merged sound survives provisional end checkpoint and late stale save");
+        repo.Clear();
+        repo.Save(notification with { DurationMs = 500, EndTimeUtc = utc.AddMilliseconds(500) });
     }
     using (var repo = new HistoryRepository(path))
     {
@@ -101,6 +124,20 @@ try
             writer.Save(notification);
             writer.Clear();
             Check(repo.Load().Count == 0, "queued clear follows earlier writes");
+            var cache = new HistorySnapshot();
+            cache.Add(notification);
+            var beforeClear = cache.ReadAll();
+            var storageGate = typeof(HistoryRepository).GetField("gate", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!.GetValue(repo)!;
+            Task clearing;
+            lock (storageGate)
+            {
+                clearing = writer.ClearAsync(() => cache.Remove(beforeClear));
+                Check(!clearing.IsCompleted, "clear returns without waiting for blocked storage");
+                cache.Add(endedLong);
+                writer.Save(endedLong);
+            }
+            clearing.GetAwaiter().GetResult();
+            Check(cache.Read().Single() == endedLong, "clear preserves sounds completed while storage was blocked");
             writer.Save(endedLong);
         }
         Check(repo.Load().Single().ProcessName == "recent.exe", "writer shutdown drains pending writes");

@@ -19,15 +19,16 @@ public sealed class HistoryWriter : IDisposable
 
     public void Save(AudioEvent item) => queue.Add(() => repository.Save(item));
     public void Prune() => queue.Add(repository.Prune);
-    public void Clear()
+    public void Clear() => ClearAsync().GetAwaiter().GetResult();
+    public Task ClearAsync(Action? cleared = null)
     {
         var completion = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         queue.Add(() =>
         {
-            try { repository.Clear(); completion.SetResult(); }
+            try { repository.Clear(); cleared?.Invoke(); completion.SetResult(); }
             catch (Exception ex) { completion.SetException(ex); }
         });
-        completion.Task.GetAwaiter().GetResult();
+        return completion.Task;
     }
 
     private void Run()

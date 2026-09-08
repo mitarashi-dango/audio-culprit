@@ -25,7 +25,13 @@ public sealed class HistoryRepository : IDisposable
         lock (gate)
         {
             using var c = db.CreateCommand();
-            c.CommandText = "INSERT INTO events VALUES($id,$start,$payload) ON CONFLICT(id) DO UPDATE SET payload=excluded.payload WHERE json_extract(excluded.payload,'$.DurationMs') > json_extract(events.payload,'$.DurationMs') OR (json_extract(excluded.payload,'$.DurationMs') = json_extract(events.payload,'$.DurationMs') AND (json_extract(excluded.payload,'$.EndTimeUtc') IS NOT NULL OR json_extract(events.payload,'$.EndTimeUtc') IS NULL))";
+            c.CommandText = """
+                INSERT INTO events VALUES($id,$start,$payload) ON CONFLICT(id) DO UPDATE SET payload=excluded.payload
+                WHERE (json_extract(events.payload,'$.EndTimeUtc') IS NULL OR json_extract(excluded.payload,'$.EndTimeUtc') IS NOT NULL)
+                  AND (json_extract(excluded.payload,'$.DurationMs') > json_extract(events.payload,'$.DurationMs')
+                    OR (json_extract(excluded.payload,'$.DurationMs') = json_extract(events.payload,'$.DurationMs')
+                      AND (json_extract(excluded.payload,'$.EndTimeUtc') IS NOT NULL OR json_extract(events.payload,'$.EndTimeUtc') IS NULL)))
+                """;
             c.Parameters.AddWithValue("$id", e.Id);
             c.Parameters.AddWithValue("$start", e.StartTimeUtc.ToString("O"));
             c.Parameters.AddWithValue("$payload", JsonSerializer.Serialize(e));

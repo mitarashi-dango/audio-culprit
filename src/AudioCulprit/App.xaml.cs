@@ -14,6 +14,9 @@ public partial class App : Application
     public AudioMonitorService Monitor { get; private set; } = null!;
     private HistoryWriter? writer;
     private readonly HistorySnapshot historySnapshot = new();
+    private readonly object historyGate = new();
+    internal AudioEvent[] ReadHistory() => historySnapshot.Read();
+    internal IgnoreRule[] ReadRules() => historySnapshot.ReadRules();
     private HotkeyService? hotkey;
     private QuickWindow? quick;
     private string settingsPath = "";
@@ -72,7 +75,7 @@ public partial class App : Application
             writer.Failed += ex => Dispatcher.BeginInvoke(() => (MainWindow as MainWindow)?.ShowError("履歴を保存できません: " + ex.Message));
             Monitor = new AudioMonitorService();
             Monitor.Completed += Save;
-            housekeeping.Tick += (_, _) => { try { foreach (var item in Monitor.Active) writer.Save(item); writer.Prune(); historySnapshot.Prune(); } catch (Exception ex) { (MainWindow as MainWindow)?.ShowError(ex.Message); } };
+            housekeeping.Tick += (_, _) => { try { foreach (var item in Monitor.Active) writer.Save(item with { EndTimeUtc = null }); writer.Prune(); historySnapshot.Prune(); } catch (Exception ex) { (MainWindow as MainWindow)?.ShowError(ex.Message); } };
             housekeeping.Start();
             hotkey = new HotkeyService(() => { try { ShowQuick(); } catch (Exception ex) { MessageBox.Show(ex.Message, "AudioCulprit"); } });
             hotkey.Enable(HotkeyEnabled);
@@ -108,14 +111,24 @@ public partial class App : Application
     }
     private void Save(AudioEvent e)
     {
-        historySnapshot.Add(e);
-        try
+        lock (historyGate)
         {
-            writer!.Save(e);
+            historySnapshot.Add(e);
+            try
+            {
+                writer!.Save(e);
+            }
+            catch (Exception ex) { Dispatcher.BeginInvoke(() => (MainWindow as MainWindow)?.ShowError("履歴を保存できません: " + ex.Message)); }
         }
-        catch (Exception ex) { Dispatcher.BeginInvoke(() => (MainWindow as MainWindow)?.ShowError("履歴を保存できません: " + ex.Message)); }
     }
-    internal void ClearHistory() { if (writer != null) writer.Clear(); else Repository.Clear(); historySnapshot.Clear(); }
+    internal System.Threading.Tasks.Task ClearHistoryAsync()
+    {
+        lock (historyGate)
+        {
+            var previous = historySnapshot.ReadAll();
+            return writer!.ClearAsync(() => historySnapshot.Remove(previous));
+        }
+    }
     internal void Ignore(IgnoreRule rule, bool remove = false)
     {
         Repository.Ignore(rule, remove);

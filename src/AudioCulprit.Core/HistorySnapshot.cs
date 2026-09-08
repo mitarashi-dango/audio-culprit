@@ -9,6 +9,23 @@ public sealed class HistorySnapshot
     public void Add(AudioEvent item) { lock (gate) events[item.Id] = item; }
     public void SetRules(IEnumerable<IgnoreRule> items) { lock (gate) rules = items.ToArray(); }
     public void Clear() { lock (gate) events.Clear(); }
+    public AudioEvent[] ReadAll() { lock (gate) return events.Values.ToArray(); }
+    public void Remove(IEnumerable<AudioEvent> items)
+    {
+        lock (gate)
+            foreach (var item in items)
+                if (events.TryGetValue(item.Id, out var current) && current == item) events.Remove(item.Id);
+    }
+    public AudioEvent[] Read()
+    {
+        lock (gate)
+        {
+            var cutoff = DateTime.UtcNow.AddDays(-7);
+            return events.Values.Where(e => e.StartTimeUtc >= cutoff)
+                .OrderByDescending(e => e.StartTimeUtc).Take(10000).ToArray();
+        }
+    }
+    public IgnoreRule[] ReadRules() { lock (gate) return rules.ToArray(); }
     public AudioEvent? Latest(IEnumerable<AudioEvent> active)
     {
         lock (gate)

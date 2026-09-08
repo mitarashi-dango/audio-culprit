@@ -25,7 +25,6 @@ public partial class MainWindow : Window
     private bool? displayedMonitoring;
     private readonly ComboBox historyPeriod = new() { Width = 120, SelectedIndex = 0, ItemsSource = new[] { "全期間", "過去30秒", "過去1分", "過去5分" }, Margin = new Thickness(8, 0, 8, 0) };
     private readonly CheckBox shortOnly = new() { Content = "短い音だけ", VerticalAlignment = VerticalAlignment.Center };
-    private List<AudioEvent> stored;
     private List<IgnoreRule> rules;
     private AudioEvent? latest;
     private string? iconPath;
@@ -41,15 +40,15 @@ public partial class MainWindow : Window
         InitializeComponent();
         this.app = app;
         History.ItemsSource = historyRows;
+        System.Windows.Data.CollectionViewSource.GetDefaultView(historyRows).SortDescriptions.Add(new SortDescription(nameof(AudioEvent.StartTimeUtc), ListSortDirection.Descending));
+        History.Columns[0].SortDirection = ListSortDirection.Descending;
         Suspicious.ItemsSource = suspiciousRows;
         Playing.ItemsSource = playingRows;
         HistoryFilters.Children.Add(historyPeriod);
         HistoryFilters.Children.Add(shortOnly);
-        stored = app.Repository.Load();
-        rules = app.Repository.Rules();
+        rules = app.ReadRules().ToList();
         historyPeriod.SelectionChanged += (_, _) => Refresh();
         shortOnly.Click += (_, _) => Refresh();
-        app.Monitor.Completed += e => Dispatcher.BeginInvoke(() => { stored.RemoveAll(x => x.Id == e.Id); stored.Insert(0, e); });
         timer.Tick += (_, _) => Refresh();
         timer.Start();
         Refresh();
@@ -67,19 +66,11 @@ public partial class MainWindow : Window
     }
     private void Refresh()
     {
-        if (++ticks % 60 == 0)
-        {
-            try
-            {
-                stored.RemoveAll(e => e.StartTimeUtc < DateTime.UtcNow.AddDays(-7));
-                if (stored.Count > 10000)
-                    stored.RemoveRange(10000, stored.Count - 10000);
-            }
-            catch (Exception ex) { ShowError(ex.Message); }
-        }
+        ++ticks;
         if (!IsVisible && ticks > 1)
             return;
         var active = app.Monitor.Enabled ? app.Monitor.Active.ToArray() : Array.Empty<AudioEvent>();
+        var stored = app.ReadHistory();
         var events = active.Concat(stored.Where(e => !active.Any(a => a.Id == e.Id))).OrderByDescending(e => e.StartTimeUtc).ToArray();
         latest = SuspicionEvaluator.Latest(events, rules);
         CulpritName.Text = latest?.DisplayName ?? (app.Monitor.Enabled ? "次の音を待っています" : "監視を停止しています");
@@ -172,7 +163,7 @@ public partial class MainWindow : Window
         app.SetMonitoring(!app.Monitor.Enabled);
     }
     private void SettingsClick(object sender, RoutedEventArgs e) => OpenSettings();
-    internal void ReloadRules() { rules = app.Repository.Rules(); Refresh(); }
+    internal void ReloadRules() { rules = app.ReadRules().ToList(); Refresh(); }
     private void LatestDetails(object sender, RoutedEventArgs e)
     {
         if (latest != null)
@@ -205,7 +196,7 @@ public partial class MainWindow : Window
         var folder = ActionButton("ファイルの場所を開く", () => Process.Start(new ProcessStartInfo("explorer.exe", $"/select,\"{item.ProcessPath}\"") { UseShellExecute = true }));
         folder.IsEnabled = item.ProcessPath != null && File.Exists(item.ProcessPath);
         p.Children.Add(folder);
-        p.Children.Add(ActionButton("このアプリを無視", () => { app.Ignore(new IgnoreRule(item.ProcessName, item.ProcessPath)); rules = app.Repository.Rules(); Refresh(); }));
+        p.Children.Add(ActionButton("このアプリを無視", () => { app.Ignore(new IgnoreRule(item.ProcessName, item.ProcessPath)); rules = app.ReadRules().ToList(); Refresh(); }));
         var muteStatus = new TextBlock { Text = "同じ実行ファイルの、現在存在する音声出力に適用します。", TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 8, 0, 8) };
         var mute = new Button { Content = "このアプリをミュート", HorizontalAlignment = HorizontalAlignment.Left };
         var unmute = new Button { Content = "ミュート解除", HorizontalAlignment = HorizontalAlignment.Left };
@@ -246,9 +237,18 @@ public partial class MainWindow : Window
         p.Children.Add(new TextBlock { Text = "無視するアプリ（履歴には残ります）", FontWeight = FontWeights.Bold });
         var list = new ListBox { ItemsSource = rules, Height = 140, Margin = new Thickness(0, 8, 0, 8) };
         p.Children.Add(list);
-        p.Children.Add(ActionButton("選択したアプリの無視を解除", () => { if (list.SelectedItem is IgnoreRule rule) { app.Ignore(rule, true); rules = app.Repository.Rules(); list.ItemsSource = rules; Refresh(); } }));
+        p.Children.Add(ActionButton("選択したアプリの無視を解除", () => { if (list.SelectedItem is IgnoreRule rule) { app.Ignore(rule, true); rules = app.ReadRules().ToList(); list.ItemsSource = rules; Refresh(); } }));
         p.Children.Add(new TextBlock { Text = "履歴は7日間・最大10,000件を保持します。\n音声自体は保存せず、マイクにもアクセスしません。\n監視間隔 50ms / 短音の統合間隔 500ms", Margin = new Thickness(0, 16, 0, 12) });
-        p.Children.Add(ActionButton("すべての履歴を削除", () => { if (MessageBox.Show("保存済みのすべての音声履歴を削除します。元に戻せません。\n再生中の音は終了後に新たに記録されます。", "履歴の削除", MessageBoxButton.YesNo, MessageBoxImage.None, MessageBoxResult.No) == MessageBoxResult.Yes) { app.ClearHistory(); stored.Clear(); Refresh(); } }));
+        var clearHistory = new Button { Content = "すべての履歴を削除", HorizontalAlignment = HorizontalAlignment.Left };
+        clearHistory.Click += async (_, _) =>
+        {
+            if (MessageBox.Show("保存済みのすべての音声履歴を削除します。元に戻せません。\n再生中の音は終了後に新たに記録されます。", "履歴の削除", MessageBoxButton.YesNo, MessageBoxImage.None, MessageBoxResult.No) != MessageBoxResult.Yes) return;
+            clearHistory.IsEnabled = false;
+            try { await app.ClearHistoryAsync(); Refresh(); }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "履歴を削除できませんでした"); }
+            finally { clearHistory.IsEnabled = true; }
+        };
+        p.Children.Add(clearHistory);
         p.Children.Add(new TextBlock { Text = "保存先: " + App.DataFolder, TextWrapping = TextWrapping.Wrap, FontSize = 11, Margin = new Thickness(0, 16, 0, 0) });
         p.Children.Add(ActionButton("ライセンス", () =>
         {
