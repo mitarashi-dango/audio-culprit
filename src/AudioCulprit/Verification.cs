@@ -64,7 +64,14 @@ internal static class Verification
             {
                 window.UpdateLayout();
                 var bitmap = new RenderTargetBitmap((int)window.ActualWidth, (int)window.ActualHeight, 96, 96, PixelFormats.Pbgra32);
-                bitmap.Render(window);
+                // Window chrome is not rendered by WPF; use an opaque backing for the capture.
+                var capture = new DrawingVisual();
+                using (var drawing = capture.RenderOpen())
+                {
+                    drawing.DrawRectangle(Brushes.White, null, new System.Windows.Rect(0, 0, bitmap.PixelWidth, bitmap.PixelHeight));
+                    drawing.DrawRectangle(new VisualBrush(window), null, new System.Windows.Rect(0, 0, window.ActualWidth, window.ActualHeight));
+                }
+                bitmap.Render(capture);
                 var encoder = new PngBitmapEncoder();
                 encoder.Frames.Add(BitmapFrame.Create(bitmap));
                 using var stream = File.Create(Path.Combine(folder, count == 3 ? "monitor-stopped.png" : count == 5 ? "monitor-restarted.png" : "main-window.png"));

@@ -340,4 +340,5 @@ Event Type: {12}</value></data>
   <data name="UpdateNotification" xml:space="preserve"><value>バージョン {0} が公開されています。クリックするとリリースページを開きます。</value></data>
   <data name="NoUpdates" xml:space="preserve"><value>新しい通常リリースはありません。現在のバージョン: {0}</value></data>
   <data name="UpdateCheckFailed" xml:space="preserve"><value>更新を確認できませんでした。しばらくしてから再度お試しください。</value></data>
+  <data name="StoreUpdates" xml:space="preserve"><value>更新はMicrosoft Storeから配信されます。この版ではWindowsログイン時の自動起動に対応していません。</value></data>
 </root>

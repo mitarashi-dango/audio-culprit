@@ -108,6 +108,10 @@ dotnet run --project tests/AudioCulprit.Tests -- --integration
 ./publish.ps1
 ```
 
+## Microsoft Store向けの開発
+
+MSIXビルドは `./publish-store.ps1` で生成します。登録・提出・検証手順は [Microsoft Store公開手順](docs/MICROSOFT-STORE.md) を参照してください。Store版は無料アプリとして審査提出済みです（2026-09-08時点）。
+
 ## サードパーティライセンス
 
 使用ライブラリのライセンスは、同梱の `THIRD-PARTY-NOTICES.md` と `licenses` フォルダ、アプリの設定画面から確認できます。

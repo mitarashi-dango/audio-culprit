@@ -53,9 +53,13 @@ public partial class App : Application
     private readonly System.Windows.Threading.DispatcherTimer housekeeping = new() { Interval = TimeSpan.FromSeconds(30) };
     protected override void OnStartup(StartupEventArgs e)
     {
+        var verifyIndex = Array.IndexOf(e.Args, "--verify");
+        var verifyFolder = verifyIndex >= 0 && e.Args.Length > verifyIndex + 1 ? Path.GetFullPath(e.Args[verifyIndex + 1]) : null;
+        if (verifyFolder != null && e.Args.Contains("--english"))
+            System.Globalization.CultureInfo.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo("en-US");
         UiText.Initialize();
         base.OnStartup(e);
-        mutex = new Mutex(true, "Local\\AudioCulprit.v02", out var first);
+        mutex = new Mutex(true, verifyFolder == null ? "Local\\AudioCulprit.v02" : "Local\\AudioCulprit.Verification", out var first);
         if (!first)
         {
             Shutdown();
@@ -63,8 +67,6 @@ public partial class App : Application
         }
         try
         {
-            var verifyIndex = Array.IndexOf(e.Args, "--verify");
-            var verifyFolder = verifyIndex >= 0 && e.Args.Length > verifyIndex + 1 ? Path.GetFullPath(e.Args[verifyIndex + 1]) : null;
             Repository = new HistoryRepository(Path.Combine(verifyFolder ?? DataFolder, "audio-culprit.db"));
             foreach (var item in Repository.Load()) historySnapshot.Add(item);
             historySnapshot.SetRules(Repository.Rules());
@@ -87,12 +89,14 @@ public partial class App : Application
             menu.Items.Add(monitorToggle);
             menu.Opening += (_, _) => UpdateTrayState();
             menu.Items.Add(UiText.Get("Settings"), null, (_, _) => { ShowMain(); ((MainWindow)MainWindow).OpenSettings(); });
+#if !STORE_BUILD
             updateMenu = new Forms.ToolStripMenuItem(UiText.Get("CheckUpdates"), null, async (_, _) =>
             {
                 if (AvailableUpdate != null) OpenReleasePage();
                 else MessageBox.Show(await CheckForUpdatesAsync(), UiText.Get("Updates"));
             });
             menu.Items.Add(updateMenu);
+#endif
             menu.Items.Add(UiText.Get("Exit"), null, (_, _) => Shutdown());
             using (var iconStream = GetResourceStream(new Uri("pack://application:,,,/Assets/audio-culprit.ico")).Stream)
             using (var icon = new System.Drawing.Icon(iconStream))
@@ -103,6 +107,11 @@ public partial class App : Application
             UpdateTrayState();
             if (!e.Args.Contains("--tray"))
                 ShowMain();
+            if (verifyFolder != null && e.Args.Contains("--store-screenshot"))
+            {
+                MainWindow.Width = 1366;
+                MainWindow.Height = 900;
+            }
             if (verifyFolder == null) StartUpdateChecks();
             if (verifyFolder != null)
             {

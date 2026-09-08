@@ -340,4 +340,5 @@ Event type: {12}</value></data>
   <data name="UpdateNotification" xml:space="preserve"><value>Version {0} is available. Click to open the release page.</value></data>
   <data name="NoUpdates" xml:space="preserve"><value>No newer stable release was found. Installed version: {0}</value></data>
   <data name="UpdateCheckFailed" xml:space="preserve"><value>Could not check for updates. Please try again later.</value></data>
+  <data name="StoreUpdates" xml:space="preserve"><value>Updates are delivered through Microsoft Store. Automatic launch at Windows login is not available in this edition.</value></data>
 </root>

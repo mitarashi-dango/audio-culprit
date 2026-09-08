@@ -231,6 +231,7 @@ public partial class MainWindow : Window
         hotkey.Click += (_, _) => { try { app.SetHotkey(hotkey.IsChecked == true); hotkeyStatus.Text = app.HotkeyStatus; } catch (Exception ex) { hotkeyStatus.Text = ex.Message; } };
         p.Children.Add(hotkey);
         p.Children.Add(hotkeyStatus);
+#if !STORE_BUILD
         var startup = new CheckBox { Content = UiText.Get("StartupOption"), Margin = new Thickness(4, 20, 0, 16) };
         const string run = "Software\\Microsoft\\Windows\\CurrentVersion\\Run";
         using (var key = Registry.CurrentUser.OpenSubKey(run))
@@ -262,6 +263,9 @@ public partial class MainWindow : Window
         updateActions.Children.Add(releasePage);
         p.Children.Add(updateActions);
         p.Children.Add(updateStatus);
+#else
+        p.Children.Add(new TextBlock { Text = UiText.Get("StoreUpdates"), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 16, 0, 12) });
+#endif
         p.Children.Add(new TextBlock { Text = UiText.Get("IgnoredApps"), FontWeight = FontWeights.Bold });
         var list = new ListBox { ItemsSource = rules, Height = 140, Margin = new Thickness(0, 8, 0, 8) };
         p.Children.Add(list);

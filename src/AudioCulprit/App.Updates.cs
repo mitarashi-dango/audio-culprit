@@ -15,20 +15,24 @@ public partial class App
     internal static Version CurrentVersion => typeof(App).Assembly.GetName().Version!;
     internal bool AutomaticUpdates => settings.CheckForUpdates;
     internal AvailableUpdate? AvailableUpdate { get; private set; }
-    private Forms.ToolStripMenuItem? updateMenu;
+    private Forms.ToolStripMenuItem? updateMenu = null;
     private readonly HttpClient updateClient = new() { Timeout = TimeSpan.FromSeconds(10), MaxResponseContentBufferSize = 1024 * 1024 };
     private readonly CancellationTokenSource updateShutdown = new();
     private readonly DispatcherTimer updateTimer = new() { Interval = TimeSpan.FromSeconds(15) };
+#if !STORE_BUILD
     private Task<string>? updateTask;
+#endif
 
     private void StartUpdateChecks()
     {
+#if !STORE_BUILD
         updateTimer.Tick += async (_, _) =>
         {
             updateTimer.Interval = TimeSpan.FromHours(1);
             if (settings.UpdateCheckDue(DateTime.UtcNow)) await CheckForUpdatesAsync();
         };
         updateTimer.Start();
+#endif
     }
 
     internal void SetAutomaticUpdates(bool enabled)
@@ -41,8 +45,12 @@ public partial class App
 
     internal Task<string> CheckForUpdatesAsync()
     {
+#if STORE_BUILD
+        return Task.FromResult(UiText.Get("StoreUpdates"));
+#else
         if (updateTask is { IsCompleted: false }) return updateTask;
         return updateTask = CheckForUpdatesCoreAsync();
+#endif
     }
 
     private async Task<string> CheckForUpdatesCoreAsync()
