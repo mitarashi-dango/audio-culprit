@@ -1,0 +1,7 @@
+<Application x:Class="AudioCulprit.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" ShutdownMode="OnExplicitShutdown">
+ <Application.Resources>
+  <Style TargetType="Window"><Setter Property="Background" Value="#F4F6FA"/><Setter Property="Foreground" Value="#19243B"/><Setter Property="FontFamily" Value="Yu Gothic UI"/><Setter Property="FontSize" Value="14"/></Style>
+  <Style TargetType="Button"><Setter Property="Padding" Value="14,8"/><Setter Property="Margin" Value="4"/><Setter Property="Background" Value="White"/><Setter Property="BorderBrush" Value="#D6DDE9"/><Setter Property="Cursor" Value="Hand"/></Style>
+  <Style TargetType="DataGrid"><Setter Property="AutoGenerateColumns" Value="False"/><Setter Property="IsReadOnly" Value="True"/><Setter Property="CanUserAddRows" Value="False"/><Setter Property="HeadersVisibility" Value="Column"/><Setter Property="GridLinesVisibility" Value="None"/><Setter Property="RowHeight" Value="38"/><Setter Property="BorderThickness" Value="0"/><Setter Property="AlternatingRowBackground" Value="#F5F7FB"/><Setter Property="SelectionMode" Value="Single"/></Style>
+ </Application.Resources>
+</Application>

@@ -1,0 +1,3 @@
+<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>WinExe</OutputType><TargetFramework>net10.0-windows</TargetFramework><UseWPF>true</UseWPF><UseWindowsForms>true</UseWindowsForms><ImplicitUsings>disable</ImplicitUsings><Nullable>enable</Nullable><Version>0.2.0</Version><ApplicationIcon>Assets/audio-culprit.ico</ApplicationIcon></PropertyGroup><ItemGroup><ProjectReference Include="../AudioCulprit.Core/AudioCulprit.Core.csproj"/></ItemGroup><ItemGroup><EmbeddedResource Include="../../licenses/*" Link="Licenses/%(Filename)%(Extension)"/><EmbeddedResource Include="../../THIRD-PARTY-NOTICES.md" Link="Licenses/THIRD-PARTY-NOTICES.md"/></ItemGroup><ItemGroup><Resource Include="Assets/audio-culprit.ico"/></ItemGroup></Project>
+
+
